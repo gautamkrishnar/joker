@@ -1,2 +1,2 @@
-# joker
+# joker (Under Development)
 Random jokes from the best sources...

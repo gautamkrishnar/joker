@@ -10,15 +10,18 @@ from random import randrange
 
 def getrequest(url):
     return requests.get(url)
+
 def postrequest(url,data):
     return requests.post(url,data)
+
 def checkstatus(response):
     if response.status_code not in iter(200,404):
         print('Status:', response.status_code, 'Problem with the request. Exiting.')
     exit()
 
+
 """
-#    XKCD API:
+#    XKCD API: https://www.programmableweb.com/api/xkcd-swagger
 
 If  @param img == True the function will return image url (string) of the meme.
     Else will return:
@@ -55,7 +58,7 @@ def xkcd(img=False):
 
 
 """
-#   Chuck Norris API
+#   Chuck Norris API: https://www.programmableweb.com/api/chuck-norris-facts
 If @param cat is given, it will return jokes related to the given categories.
 List of categories: https://api.chucknorris.io/jokes/categories
 """
@@ -68,6 +71,7 @@ def ChuckNorris(cat=""):
             return "Wrong category! / Please check your internet conection,"
     data = response.json()
     return data['value']
+
 
 """
 #   Be Like Bill API
@@ -89,8 +93,10 @@ def belikebill(name="",sex="",text=""):
         return "http://belikebill.azurewebsites.net/billgen-API.php?text="+text
     else:
         return "http://belikebill.azurewebsites.net/billgen-API.php?default=1"
+
+
 """
-#   Phteven English API
+#   Phteven English API: https://www.programmableweb.com/api/phteven
 @:param inp: text to translate
 todo: Under construction
 """
@@ -106,7 +112,7 @@ def phteven(inp):
 
 
 """
-#   Ron Swanson Quotes API
+#   Ron Swanson Quotes API: https://www.programmableweb.com/api/ron-swanson-quotes
 Returns random Ron Swanson quotes if no param is given
 @param count: Number of quotes, Will return the specified number of quotes as list
 """
@@ -120,8 +126,9 @@ def RonSwansonQuotes(count=1):
     data = response.json()
     return data[0]
 
+
 """
-#   Yes or No API
+#   Yes or No API: https://www.programmableweb.com/api/yes-or-no
 Returns random yes or no as a string if no parameter is passed
 @:param img: Booleam if it is specified, then it will return a yes or now and a image url of random meme with that choice
 @:param forced: Values("yes","no") if any of it is given, the result will be forced to  =v=be the given input
@@ -139,19 +146,23 @@ def YesOrNo(img=False,forced=""):
 
 
 """
-#   Cat Facts API
+#   Cat Facts API:
 The Cat Facts API is a web service able to deliver random cat facts sourced from a variety of open web pages.
 @:param count: no of facts to recieve. default is 1. If more than one, function returns a list
 """
 def catFacts(count=1):
     if count > 1:
         result = getrequest("http://catfacts-api.appspot.com/api/facts?number="+str(count))
+        checkstatus(result)
         data = result.json()
         return data['facts']
     else:
-        result = getrequest("http://catfacts-api.appspot.com/api/facts?number=" + str(count))
+        result = getrequest("http://catfacts-api.appspot.com/api/facts")
+        checkstatus(result)
         data = result.json()
-        return data['facts'][0]
+        return data['facts']
+
+
 
 if __name__ == '__main__':
     print(catFacts(3))
